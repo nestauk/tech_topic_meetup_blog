@@ -191,7 +191,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -216,15 +216,25 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#File paths</span>
-<span class="c1">#Path to data files</span>
 
+<span class="c1">#Create intermediate output path</span>
+<span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">()</span>
+
+<span class="c1">#Path to data files</span>
 <span class="n">main_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
 <span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()),</span><span class="s2">&quot;meetup_data&quot;</span><span class="p">)</span>
-<span class="n">intermediate_output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;intermediate_output&quot;</span>
+<span class="n">intermediate_output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;intermediate_outputs&quot;</span>
+<span class="n">plot_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;plots&quot;</span>
+
+<span class="k">if</span> <span class="s1">&#39;intermediate_outputs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">main_directory</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">intermediate_output_path</span><span class="p">)</span>
+<span class="k">if</span> <span class="s1">&#39;plots&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">main_directory</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">plot_path</span><span class="p">)</span>
 
 <span class="c1">#Read api key from config file &#39;my_api_key&#39;</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_directory</span><span class="p">,</span><span class="s2">&quot;my_api_key.json&quot;</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_file</span><span class="p">:</span>
@@ -247,7 +257,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Functions for data crawling</span>
@@ -305,7 +315,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Utilities to process data</span>
@@ -347,7 +357,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Functions to extract groups from </span>
@@ -386,6 +396,40 @@ div#notebook {
     
     <span class="c1">#Return data</span>
     <span class="k">return</span><span class="p">(</span><span class="n">domain_groups_df</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">extract_novel_keywords</span><span class="p">(</span><span class="n">threshold_date</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    input: a threshold date (string) in %d-%m-%Y format</span>
+<span class="sd">    output: novel keywords after the threshold.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">threshold_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">threshold_date</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m-%Y&quot;</span><span class="p">)</span>
+
+    <span class="c1">#Unique kws before threshold</span>
+    <span class="n">first_period_kws</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">kw</span> <span class="k">for</span> <span class="n">kw_list</span><span class="p">,</span><span class="n">date</span> <span class="ow">in</span> 
+                           <span class="nb">zip</span><span class="p">(</span><span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;group_topics&#39;</span><span class="p">],</span>
+                               <span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;created_date&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">kw_list</span> <span class="k">if</span>
+                            <span class="n">date</span> <span class="o">&lt;</span> <span class="n">threshold_date</span><span class="p">])</span>
+
+    <span class="n">snd_period_kws</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">kw</span> <span class="k">for</span> <span class="n">kw_list</span><span class="p">,</span><span class="n">date</span> <span class="ow">in</span> 
+                           <span class="nb">zip</span><span class="p">(</span><span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;group_topics&#39;</span><span class="p">],</span>
+                               <span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;created_date&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">kw_list</span> <span class="k">if</span>
+                           <span class="n">date</span> <span class="o">&gt;</span> <span class="n">threshold_date</span><span class="p">])</span>
+
+    <span class="n">novel_kws</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">snd_period_kws</span> <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_period_kws</span><span class="p">]</span>
+
+    <span class="c1">#Count novel kws</span>
+    <span class="n">novel_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">kw</span> <span class="k">for</span> <span class="n">kw_list</span><span class="p">,</span><span class="n">date</span> <span class="ow">in</span> 
+                           <span class="nb">zip</span><span class="p">(</span><span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;group_topics&#39;</span><span class="p">],</span>
+                               <span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;created_date&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">kw_list</span> <span class="k">if</span>
+                           <span class="n">date</span> <span class="o">&gt;</span> <span class="n">threshold_date</span> <span class="ow">and</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">novel_kws</span><span class="p">]</span>
+
+    <span class="c1">#Count all kw appearances in period</span>
+    <span class="n">novel_freqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">novel_counts</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="n">novel_freqs</span><span class="p">)</span>
+
 
 <span class="c1">#Function to extract all event activity for a keyword</span>
 <span class="k">def</span> <span class="nf">extract_keyword_activity</span><span class="p">(</span><span class="n">keyword</span><span class="p">):</span>
@@ -447,7 +491,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#The input for this analysis is a json file with information about tech groups obtained with</span>
@@ -495,7 +539,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Parse group metadata</span>
@@ -518,7 +562,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Generate dataframe with groups in the keywords of interest (they could be something else)</span>
@@ -543,7 +587,7 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/usr/local/lib/python3.5/site-packages/ipykernel/__main__.py:51: SettingWithCopyWarning: 
+<pre>/usr/local/lib/python3.5/site-packages/ipykernel/__main__.py:33: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -558,7 +602,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Extract events and RSVPs for all relevant groups</span>
@@ -608,7 +652,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Generate df with counts of groups formed and attendees at events by keyword/month combination</span>
@@ -668,7 +712,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/usr/local/lib/python3.5/site-packages/ipykernel/__main__.py:23: FutureWarning: pd.rolling_mean is deprecated for Series and will be removed in a future version, replace with 
-	Series.rolling(center=False,window=4).mean()
+	Series.rolling(window=4,center=False).mean()
 </pre>
 </div>
 </div>
@@ -679,7 +723,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#We want to normalise all the above by &#39;average&#39; levels of activity in Meetup, based on 200 randomly selected</span>
@@ -745,7 +789,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/usr/local/lib/python3.5/site-packages/ipykernel/__main__.py:35: FutureWarning: pd.rolling_mean is deprecated for Series and will be removed in a future version, replace with 
-	Series.rolling(center=False,window=4).mean()
+	Series.rolling(window=4,center=False).mean()
 </pre>
 </div>
 </div>
@@ -756,13 +800,13 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Normalise the domain df by activity in the random set</span>
-
-<span class="n">event_random_long</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">all_event_melted</span><span class="p">,</span><span class="n">random_melted</span><span class="p">,</span><span class="n">left_on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;month_date&#39;</span><span class="p">,</span><span class="s1">&#39;metric&#39;</span><span class="p">],</span>
-                            <span class="n">right_on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;month_date&#39;</span><span class="p">,</span><span class="s1">&#39;metric&#39;</span><span class="p">],</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<span class="n">event_random_long</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">all_event_melted</span><span class="p">,</span><span class="n">random_melted</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">event_random_wide</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">event_random_long</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;month_date&#39;</span><span class="p">,</span><span class="s1">&#39;metric&#39;</span><span class="p">],</span>
+                                  <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;topic_id&#39;</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
 
 <span class="n">event_random_norm</span> <span class="o">=</span> <span class="n">event_random_wide</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">/</span><span class="n">event_random_wide</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -790,53 +834,7 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Get the top 10 keywords for 2015 and look at their number of events and number of attendees.</span>
-
-<span class="k">def</span> <span class="nf">extract_novel_keywords</span><span class="p">(</span><span class="n">threshold_date</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    input: a threshold date (string) in %d-%m-%Y format</span>
-<span class="sd">    output: novel keywords after the threshold.</span>
-<span class="sd">    </span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    
-    <span class="n">threshold_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">threshold_date</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m-%Y&quot;</span><span class="p">)</span>
-
-    <span class="c1">#Unique kws before threshold</span>
-    <span class="n">first_period_kws</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">kw</span> <span class="k">for</span> <span class="n">kw_list</span><span class="p">,</span><span class="n">date</span> <span class="ow">in</span> 
-                           <span class="nb">zip</span><span class="p">(</span><span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;group_topics&#39;</span><span class="p">],</span>
-                               <span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;created_date&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">kw_list</span> <span class="k">if</span>
-                            <span class="n">date</span> <span class="o">&lt;</span> <span class="n">threshold_date</span><span class="p">])</span>
-
-    <span class="n">snd_period_kws</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">kw</span> <span class="k">for</span> <span class="n">kw_list</span><span class="p">,</span><span class="n">date</span> <span class="ow">in</span> 
-                           <span class="nb">zip</span><span class="p">(</span><span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;group_topics&#39;</span><span class="p">],</span>
-                               <span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;created_date&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">kw_list</span> <span class="k">if</span>
-                           <span class="n">date</span> <span class="o">&gt;</span> <span class="n">threshold_date</span><span class="p">])</span>
-
-    <span class="n">novel_kws</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">snd_period_kws</span> <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_period_kws</span><span class="p">]</span>
-
-    <span class="c1">#Count novel kws</span>
-    <span class="n">novel_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">kw</span> <span class="k">for</span> <span class="n">kw_list</span><span class="p">,</span><span class="n">date</span> <span class="ow">in</span> 
-                           <span class="nb">zip</span><span class="p">(</span><span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;group_topics&#39;</span><span class="p">],</span>
-                               <span class="n">group_topics_df</span><span class="p">[</span><span class="s1">&#39;created_date&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">kw_list</span> <span class="k">if</span>
-                           <span class="n">date</span> <span class="o">&gt;</span> <span class="n">threshold_date</span> <span class="ow">and</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">novel_kws</span><span class="p">]</span>
-
-    <span class="c1">#Count all kw appearances in period</span>
-    <span class="n">novel_freqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">novel_counts</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-
-    <span class="k">return</span><span class="p">(</span><span class="n">novel_freqs</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Extract top 10 keywords from last year.</span>
@@ -852,10 +850,30 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/local/lib/python3.5/site-packages/pandas/core/generic.py:1537: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=53, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&apos;10.4.180.27&apos;, 60743), raddr=(&apos;104.16.85.48&apos;, 443)&gt;
+  gc.collect(2)
+/usr/local/lib/python3.5/site-packages/ipykernel/__main__.py:33: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#recent_activity_df for plotting with R (similar processing to above, and some repetition)</span>
@@ -880,6 +898,19 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 
 <span class="c1">#Write out</span>
 <span class="n">recent_activity_stats</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">intermediate_output_path</span><span class="p">,</span><span class="s2">&quot;recent_activity.csv&quot;</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
 </div>

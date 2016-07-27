@@ -5,7 +5,7 @@
 
 # ## 0. Imports and preliminaries
 
-# In[1]:
+# In[33]:
 
 import os
 import json
@@ -22,14 +22,24 @@ import pandas as pd
 import praw
 
 
-# In[11]:
+# In[42]:
 
 #File paths
-#Path to data files
 
+#Create intermediate output path
+os.listdir()
+
+#Path to data files
 main_directory = os.path.dirname(os.getcwd())
+
 data_path = os.path.join(os.path.dirname(os.getcwd()),"meetup_data")
-intermediate_output_path = os.path.dirname(os.getcwd()) + "/" + "intermediate_output"
+intermediate_output_path = os.path.dirname(os.getcwd()) + "/" + "intermediate_outputs"
+plot_path = os.path.dirname(os.getcwd()) + "/" + "plots"
+
+if 'intermediate_outputs' not in os.listdir(main_directory):
+    os.mkdir(intermediate_output_path)
+if 'plots' not in os.listdir(main_directory):
+    os.mkdir(plot_path)
 
 #Read api key from config file 'my_api_key'
 with open(os.path.join(main_directory,"my_api_key.json"),'r') as data_file:
@@ -38,7 +48,7 @@ with open(os.path.join(main_directory,"my_api_key.json"),'r') as data_file:
 
 # ## 1. Functions
 
-# In[13]:
+# In[35]:
 
 ## Functions for data crawling
 
@@ -88,7 +98,7 @@ def crawl_rspvs(event_id):
     return(response.json())
 
 
-# In[16]:
+# In[36]:
 
 #Utilities to process data
 def extract_topics_from_dict(topic,container):
@@ -122,7 +132,7 @@ def get_month(date_var):
     return(outvar)
 
 
-# In[17]:
+# In[60]:
 
 #Functions to extract groups from 
 def extract_groups_with_keyword(kw):
@@ -160,6 +170,40 @@ def get_groups_with_keyword(kw):
     
     #Return data
     return(domain_groups_df)
+
+def extract_novel_keywords(threshold_date):
+    '''
+    input: a threshold date (string) in %d-%m-%Y format
+    output: novel keywords after the threshold.
+    
+    '''
+    
+    threshold_date = datetime.datetime.strptime(threshold_date,"%d-%m-%Y")
+
+    #Unique kws before threshold
+    first_period_kws = set([kw for kw_list,date in 
+                           zip(group_topics_df['group_topics'],
+                               group_topics_df['created_date']) for kw in kw_list if
+                            date < threshold_date])
+
+    snd_period_kws = set([kw for kw_list,date in 
+                           zip(group_topics_df['group_topics'],
+                               group_topics_df['created_date']) for kw in kw_list if
+                           date > threshold_date])
+
+    novel_kws = [tag for tag in snd_period_kws if tag not in first_period_kws]
+
+    #Count novel kws
+    novel_counts = [kw for kw_list,date in 
+                           zip(group_topics_df['group_topics'],
+                               group_topics_df['created_date']) for kw in kw_list if
+                           date > threshold_date and kw in novel_kws]
+
+    #Count all kw appearances in period
+    novel_freqs = pd.Series(novel_counts).value_counts()
+
+    return(novel_freqs)
+
 
 #Function to extract all event activity for a keyword
 def extract_keyword_activity(keyword):
@@ -207,7 +251,7 @@ def extract_keyword_activity(keyword):
 
 # ## 2a. Data processing: Generate dataset with group/event activity in selected keywords
 
-# In[18]:
+# In[39]:
 
 #The input for this analysis is a json file with information about tech groups obtained with
 #a Meetup API wrapper developed by Matt Williams: https://github.com/mattjw/exploring_tech_meetups
@@ -233,7 +277,7 @@ group_topics_df['created_date'] = group_topics_df[
 group_topics_list = [g['group_topics'] for g in group_topics]
 
 
-# In[7]:
+# In[40]:
 
 #Parse group metadata
 group_metadata_df = pd.DataFrame([{"group_id": g["_id"],
@@ -248,7 +292,7 @@ group_metadata_df = pd.DataFrame([{"group_id": g["_id"],
     
 
 
-# In[9]:
+# In[43]:
 
 #Generate dataframe with groups in the keywords of interest (they could be something else)
 domain_list = ['virtual-reality','deep-learning','bitcoin']
@@ -262,7 +306,7 @@ all_domains_df = pd.concat(domain_dfs,axis=0)
 all_domains_df.to_csv(os.path.join(intermediate_output_path,"domain_activity_df.csv"))
 
 
-# In[13]:
+# In[44]:
 
 #Extract events and RSVPs for all relevant groups
 
@@ -297,7 +341,7 @@ all_events_labelled_df.to_csv(os.path.join(intermediate_output_path,"domain_even
 
 # ## 2b. Data processing: Generate processed outputs for visualisation
 
-# In[27]:
+# In[45]:
 
 #Generate df with counts of groups formed and attendees at events by keyword/month combination
 #Create month variable
@@ -345,7 +389,7 @@ all_event_pivot.reset_index(drop=False,inplace=True)
 all_event_pivot.to_csv(os.path.join(intermediate_output_path,"domain_activity_not_norm.csv"))
 
 
-# In[26]:
+# In[49]:
 
 #We want to normalise all the above by 'average' levels of activity in Meetup, based on 200 randomly selected
 #groups.
@@ -399,12 +443,12 @@ all_event_melted = pd.melt(all_event_pivot,
                            id_vars=['month_date','topic_id'])
 
 
-# In[40]:
+# In[57]:
 
 #Normalise the domain df by activity in the random set
-
-event_random_long = pd.merge(all_event_melted,random_melted,left_on=['month_date','metric'],
-                            right_on=['month_date','metric'],how='inner')
+event_random_long = pd.concat([all_event_melted,random_melted],axis=0)
+event_random_wide = pd.pivot_table(event_random_long,index=['month_date','metric'],
+                                  columns='topic_id',values='value')
 
 event_random_norm = event_random_wide.apply(
     lambda x: x/event_random_wide['all']).reset_index(level=1,drop=False)
@@ -418,45 +462,7 @@ all_event_norm.to_csv(os.path.join(intermediate_output_path,"domain_activity_nor
 
 # ## 2c: Extract data about emerging trends
 
-# In[43]:
-
-#Get the top 10 keywords for 2015 and look at their number of events and number of attendees.
-
-def extract_novel_keywords(threshold_date):
-    '''
-    input: a threshold date (string) in %d-%m-%Y format
-    output: novel keywords after the threshold.
-    
-    '''
-    
-    threshold_date = datetime.datetime.strptime(threshold_date,"%d-%m-%Y")
-
-    #Unique kws before threshold
-    first_period_kws = set([kw for kw_list,date in 
-                           zip(group_topics_df['group_topics'],
-                               group_topics_df['created_date']) for kw in kw_list if
-                            date < threshold_date])
-
-    snd_period_kws = set([kw for kw_list,date in 
-                           zip(group_topics_df['group_topics'],
-                               group_topics_df['created_date']) for kw in kw_list if
-                           date > threshold_date])
-
-    novel_kws = [tag for tag in snd_period_kws if tag not in first_period_kws]
-
-    #Count novel kws
-    novel_counts = [kw for kw_list,date in 
-                           zip(group_topics_df['group_topics'],
-                               group_topics_df['created_date']) for kw in kw_list if
-                           date > threshold_date and kw in novel_kws]
-
-    #Count all kw appearances in period
-    novel_freqs = pd.Series(novel_counts).value_counts()
-
-    return(novel_freqs)
-
-
-# In[44]:
+# In[62]:
 
 #Extract top 10 keywords from last year.
 top_10_last_year = extract_novel_keywords("01-03-2015")[:20]
@@ -467,7 +473,7 @@ recent_keywords_info = [extract_keyword_activity(i) for i in top_10_keywords_lis
 recent_activity_df = pd.concat([x[0] for x in recent_keywords_info],axis=0)
 
 
-# In[64]:
+# In[63]:
 
 #recent_activity_df for plotting with R (similar processing to above, and some repetition)
 
@@ -491,4 +497,9 @@ recent_activity_stats['events_per_group'] = recent_activity_stats['event_number'
 
 #Write out
 recent_activity_stats.to_csv(os.path.join(intermediate_output_path,"recent_activity.csv"))
+
+
+# In[ ]:
+
+
 
