@@ -2,7 +2,7 @@
 
 This repo contains R and Python scripts for the analysis of meetup data in this Nesta blog.
 
-In order to run the script, you need to create a `myapi__key.json` file in the folder with your [Meetup API key](https://secure.meetup.com/meetup_api/key/) 
+In order to run the script, you need to create a `my_api__key.json` file in the folder with your [Meetup API key](https://secure.meetup.com/meetup_api/key/) 
 
 If you want to update the analysis, you will need to crawl tech group information from [here](https://github.com/mattjw/exploring_tech_meetups)
 
